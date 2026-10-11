@@ -1,4 +1,4 @@
-﻿using RabbitMQ.Client;
+﻿using Fiap.Notifications.Api.Services.RabbitMQ;
 
 namespace Fiap.Notifications.Api.Services.IoC
 {
@@ -15,13 +15,12 @@ namespace Fiap.Notifications.Api.Services.IoC
 		/// <returns></returns>
 		public static IServiceCollection RegisterDependencies(this IServiceCollection services, IConfiguration configuration)
 		{
-
-      services.AddSingleton<ConnectionFactory>();
-
-      services.AddHostedService<RabbitMQConsumerService>();
+      services.AddHostedService<ConsumerDefaultEventService>();
+      services.AddHostedService<ConsumerPaymentProcessedEventService>();
+      services.AddHostedService<ConsumerUserCreatedEventService>();
 
       //Interfaces
-      services.AddScoped<Domain.Services.Interface.IRabbitMQService, RabbitMQService>();
+      services.AddScoped<Domain.Services.Interface.IRabbitMQService, PublishService>();
 
       // Domain Services			
       services.AddScoped<Domain.Services.NotificarService>();	

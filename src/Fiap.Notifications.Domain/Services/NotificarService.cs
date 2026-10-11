@@ -17,7 +17,7 @@ namespace Fiap.Notifications.Domain.Services
       if (string.IsNullOrEmpty(menssagem))
         throw new ValidationException("Campo menssagem é obrigatório. ");
 
-      _rabbitMQ.SendMessageAsync(menssagem);
+      _rabbitMQ.SendMessageAsync("notifications-default", menssagem);
     }
   }
 }
