@@ -1,10 +1,8 @@
-using Fiap.Notifications.Api.Services;
 using Fiap.Notifications.Api.Services.IoC;
 using Fiap.Notifications.Api.Services.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json.Serialization;
 

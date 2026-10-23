@@ -29,5 +29,5 @@ FROM base AS final
 ENV ASPNETCORE_URLS="http://+:8083"
 ENV ASPNETCORE_ENVIRONMENT="Development"
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=publish /app/publish . 
 ENTRYPOINT ["dotnet", "Fiap.Notifications.Api.dll"]

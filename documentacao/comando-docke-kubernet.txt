@@ -1,0 +1,76 @@
+******************* DOCKER -KUBERNETS ************************************
+
+**************** CRIAR TAG DA IMAGEM LOCAL PARA DOCKER HUB ***************
+docker tag src-api-notifications douglasloc/src-api-notifications:latest
+docker tag src-api-notifications douglasloc/src-api-users:latest
+docker tag src-api-notifications douglasloc/src-api-catalog:latest
+docker tag src-api-notifications douglasloc/src-api-payments:latest
+**************************************************************************
+
+************** PUBLICAR TAG CRIADA DA IMAGEM LOCAL NO DOCKER HUB *********
+docker push douglasloc/src-api-notifications:latest
+docker push douglasloc/src-api-users:latest
+docker push douglasloc/src-api-catalog:latest
+docker push douglasloc/src-api-payments:latest
+*************************************************************************
+
+************** ATUALIZAR IMAGEM DO PROJETO PARA DOCKER HUB **************
+docker build -t douglasloc/src-api-notifications:latest -f Dockerfile ../
+docker build -t douglasloc/src-api-users:latest -f Dockerfile ../
+docker build -t douglasloc/src-api-catalog:latest -f Dockerfile ../
+docker build -t douglasloc/src-api-payments:latest -f Dockerfile ../
+*************************************************************************
+
+************* CRIAR UMA IMAGEM NO DOCKER LOCAL **************************
+docker-compose up -d
+docker compose down --rmi all
+*************************************************************************
+
+************** GET: PODS SVC CM DEPOYMENTS SECRET *******
+kubectl get pods --watch
+kubectl get pod,svc,cm,deployments,secret
+kubectl get pod
+*************************************************************************
+
+*************  DELETE: PODS SVC CM DEPOYMENTS SECRET ********************
+kubectl delete -f 05-svc-notifications-api.yaml -f 04-deployment-notifications.yaml -f 03-deployment-rabbitmq.yaml -f 02-configmap-rabbitmq.yaml -f 01-secret-rabbitmq.yaml
+kubectl delete -f 03-svc-users-api.yaml -f 02-deployment-users.yaml -f 01-configmap-users.yaml
+kubectl delete -f 03-svc-catalog-api.yaml -f 02-deployment-catalog.yaml -f 01-configmap-catalog.yaml
+kubectl delete -f 02-svc-payments-api.yaml -f 01-deployment-payments.yaml
+kubectl delete pod --all
+kubectl delete svc --all
+kubectl delete cm --all
+kubectl delete secret --all
+kubectl delete deployments --all
+kubectl delete -f deployments-user.yaml
+kubectl delete -f "deployments-notifications.yaml"
+*************************************************************************
+
+*************  CREATE: PODS SVC CM DEPOYMENTS SECRET ********************
+kubectl apply -f 01-secret-rabbitmq.yaml -f 02-configmap-rabbitmq.yaml -f 03-deployment-rabbitmq.yaml -f 04-deployment-notifications.yaml -f 05-svc-notifications-api.yaml
+kubectl apply -f 01-configmap-users.yaml -f 02-deployment-users.yaml -f 03-svc-users-api.yaml
+kubectl apply -f 01-configmap-catalog.yaml -f 02-deployment-catalog.yaml -f 03-svc-catalog-api.yaml
+kubectl apply -f 01-deployment-payments.yaml -f 02-svc-payments-api.yaml
+kubectl apply -f configmap.yaml
+kubectl apply -f k8s/
+**************************************************************************
+
+*************  RESTART: PODS SVC CM DEPOYMENTS SECRET ********************
+kubectl apply -f .
+kubectl rollout restart deployment/notifications-api-deployment
+**************************************************************************
+
+********************** EXIBIR LOGS DO CONSOLE DA APLICACAO ***************
+kubectl logs --since=30m pod/notifications-api-deployment-5fc7685856-2vfgp -c container-user-api
+kubectl logs -f --since=30m pod/notifications-api-deployment-775dcb7599-czdtt
+kubectl logs pod/users-api-deployment-db85fb5d-gj2qr
+kubectl logs -f -l app=svc-notifications-api --since=30m --prefix
+**************************************************************************
+
+********************** ABRIR O GERENCIADOR DO RABBITMQ *******************
+kubectl port-forward svc/rabbitmq-service 15672:15672
+**************************************************************************
+
+********************** MODELO JSON ENVIO PELO GERENCIADOR DO RABBITMQ - PARA A QUERE: user-created-event *******************
+{"Data":{"Nome":"Bia Santos 10","Email":"bia@gmail.com"},"Key":"ef43ba51-bcc5-4c3b-bf67-fed0934b0ad4","Event":"UserCreatedEvent"}
+**************************************************************************

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-rabbitmq
+  labels:
+    component: rabbitmq-config
+data:
+  RabbitMQ__HostName: "rabbitmq-service"
+  RabbitMQ__Host: "rabbitmq-service"
+  RabbitMQ__Port: "5672"
+  RabbitMQ__UserName: "admin"
+  RabbitMQ__User: "admin"
+  RabbitMQ__VirtualHost: "/"
