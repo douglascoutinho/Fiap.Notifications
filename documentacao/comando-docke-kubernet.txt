@@ -55,6 +55,12 @@ kubectl apply -f configmap.yaml
 kubectl apply -f k8s/
 **************************************************************************
 
+*************  START APIS - CLUSTER-IP  **********************************
+kubectl port-forward svc/notifications-api 9093:9093
+kubectl port-forward svc/payments-api 8094:8094
+kubectl port-forward svc/catalog-api 8092:8092
+**************************************************************************
+
 *************  RESTART: PODS SVC CM DEPOYMENTS SECRET ********************
 kubectl apply -f .
 kubectl rollout restart deployment/notifications-api-deployment
