@@ -158,4 +158,4 @@ Quando o consumidor estiver ativo, os logs mostram `Aguardando mensagens da fila
 - **Imagem `:latest`:** com `imagePullPolicy: Always`, dificulta o rollback. Prefira uma tag de versão.
 - **Versões do RabbitMQ:** o Compose usa `3.11-management` e o Kubernetes usa `3.13-management`.
 - **Sem persistência no Kubernetes:** o RabbitMQ do cluster não tem volume, então filas e mensagens se perdem se o pod for recriado.
-- - **APIS:** para simular o processo completo é preciso baixar as apis: catalog, payments e user.
+- **APIS:** para simular o processo completo é preciso baixar as apis: catalog, payments e user.
