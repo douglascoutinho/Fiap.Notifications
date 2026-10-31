@@ -59,6 +59,7 @@ kubectl apply -f k8s/
 kubectl port-forward svc/notifications-api 9093:9093
 kubectl port-forward svc/payments-api 8094:8094
 kubectl port-forward svc/catalog-api 8092:8092
+kubectl port-forward svc/users-api 8091:8091
 **************************************************************************
 
 *************  RESTART: PODS SVC CM DEPOYMENTS SECRET ********************
@@ -71,6 +72,9 @@ kubectl logs --since=30m pod/notifications-api-deployment-5fc7685856-2vfgp -c co
 kubectl logs -f --since=30m pod/notifications-api-deployment-775dcb7599-czdtt
 kubectl logs pod/users-api-deployment-db85fb5d-gj2qr
 kubectl logs -f -l app=svc-notifications-api --since=30m --prefix
+
+kubectl logs deploy/notifications-api-deployment -c container-notifications-api -f
+kubectl logs deploy/payments-api-deployment -c container-payments-api -f
 **************************************************************************
 
 ********************** ABRIR O GERENCIADOR DO RABBITMQ *******************
@@ -78,5 +82,5 @@ kubectl port-forward svc/rabbitmq-service 15672:15672
 **************************************************************************
 
 ********************** MODELO JSON ENVIO PELO GERENCIADOR DO RABBITMQ - PARA A QUERE: user-created-event *******************
-{"Data":{"Nome":"Bia Santos 10","Email":"bia@gmail.com"},"Key":"ef43ba51-bcc5-4c3b-bf67-fed0934b0ad4","Event":"UserCreatedEvent"}
+{"Data":{"Nome":"Envio Manual 10","Email":"enviomanual@gmail.com"},"Key":"ef43ba51-bcc5-4c3b-bf67-fed0934b0ad4","Event":"UserCreatedEvent"}
 **************************************************************************

@@ -26,7 +26,7 @@ namespace Fiap.Notifications.Api.Services.Extensions
         return $"Pagamento Aprovado: Email de confirmação foi enviado para o endereco: {result?.Data?.Email} - {result?.Key}";
       }
 
-      return string.Empty;
+      return $"Pagamento Reprovado";
     }
 
     public static string ProcessarMensagemConsole(this EventResult<ProcessoCriacaoUsuarioEvent> result)
